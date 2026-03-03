@@ -28,3 +28,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+.idea/misc.xml
+.idea/modules.xml
+SNHU_IT-145-16670-M01 Found in App Development 2026.iml
