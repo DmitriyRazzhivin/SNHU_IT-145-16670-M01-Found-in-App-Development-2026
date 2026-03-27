@@ -11,7 +11,7 @@ Note: Account for all characters that aren't spaces, periods, exclamation points
  */
 import java.util.Scanner;
 
-public class LabProgram {
+public class LabProgram_1 {
     public static void main(String[] args) {
         Scanner scnr = new Scanner(System.in);
         String userText;
