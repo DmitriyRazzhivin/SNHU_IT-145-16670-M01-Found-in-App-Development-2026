@@ -3,7 +3,7 @@ package BookSorting;
 import java.util.ArrayList;
 
 public class ArrayListLibrary {
-    // ArraryList library
+    // ArrayList library
     public ArrayList<Book> library;
 
     public ArrayListLibrary() {

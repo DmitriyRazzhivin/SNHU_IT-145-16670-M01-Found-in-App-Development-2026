@@ -19,9 +19,10 @@ public class Library {
         String bookTitle;
         String bookAuthor;
         long bookISBN;
-
+        System.out.println("Current Directory: " + System.getProperty("user.dir"));
         // Try to open file
-        fileByteStream = new FileInputStream("Books.txt");
+
+        fileByteStream = new FileInputStream("Module4/Labs/BookSorting/Books.txt");
         inFS = new Scanner(fileByteStream);
 
         while (inFS.hasNextLine()) {
@@ -88,6 +89,18 @@ public class Library {
         // TODO: Print number of operations for ArrayList
 
         System.out.println("Number of ArrayList operations: " + arrayListOperations);
+
+        // Create two nodes
+        BookNode node1 = new BookNode("Book A", "Author A", 12345);
+        BookNode node2 = new BookNode("Book B", "Author B", 67890);
+
+// Link them
+        node1.setNext(node2);
+
+// Print the "Address" representation
+        System.out.println("Node 1 'Address': " + node1);
+        System.out.println("The link inside Node 1 points to: " + node1.getNext());
+        System.out.println("Node 2 'Address': " + node2);
     }
 }
 
