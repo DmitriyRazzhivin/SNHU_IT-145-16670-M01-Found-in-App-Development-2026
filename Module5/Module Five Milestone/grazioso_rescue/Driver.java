@@ -22,7 +22,7 @@ public class Driver {
 
         while (!menuChoice.equalsIgnoreCase("q")) {
             displayMenu();
-            menuChoice = scnr.nextLine();
+            menuChoice = scnr.nextLine().trim().toLowerCase(); // Use trim and toLowerCase for inout validation
 
             switch (menuChoice) {
                 case "1":
@@ -51,13 +51,99 @@ public class Driver {
                     break;
             }
         }
-	// For the project submission you must also include input validation
-        // and appropriate feedback to the user.
-        // Hint: create a Scanner and pass it to the necessary
-        // methods 
-	// Hint: Menu options 4, 5, and 6 should all connect to the printAnimals() method.
+        scnr.close(); // Closing scanner
 
     }
+
+    //Helper method to get a valid double from the user
+    public static double getValidDouble(Scanner scanner, String prompt){
+        double value = -1;
+        while(true){
+            try {
+                System.out.println(prompt);
+                String input = scanner.nextLine().trim();
+                value = Double.parseDouble(input);
+                if(value >= 0) {
+                    return value;
+                }else {
+                    System.out.println("Value must be a positive number");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a numeric value");
+            }
+            }
+        }
+
+    //Helper method to get a valid String from user(not empty)
+    public static String getValidString(Scanner scanner, String prompt){
+        String input = "";
+        while (input.isEmpty()) {
+            System.out.println(prompt);
+            input = scanner.nextLine().trim();
+            if(input.isEmpty()){
+                System.out.println("This field cannot be empty. Please try again.");
+            }
+        }
+        return input;
+    }
+
+    //helper method that validates a number but returns it as a String
+    public static String getValidNumericString(Scanner scanner, String prompt) {
+        while (true) {
+            try {
+                System.out.println(prompt);
+                String input = scanner.nextLine().trim();
+                // Test if it's a valid number
+                Double.parseDouble(input);
+                // If the parse succeeds, return the original string
+                return input;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a numeric value (e.g., 25.5).");
+            }
+        }
+    }
+    // Helper method to safely get a boolean value from the user
+    public static boolean getValidBoolean(Scanner scanner, String prompt) {
+        while (true) {
+            System.out.println(prompt);
+            String input = scanner.nextLine().trim().toLowerCase();
+
+            if (input.equals("true")) {
+                return true;
+            } else if (input.equals("false")) {
+                return false;
+            } else {
+                // Clear feedback for the user
+                System.out.println("Invalid input. Please type exactly 'true' or 'false'.");
+            }
+        }
+    }
+
+    // Helper method to validate monkey species
+    public static String getValidMonkeySpecies(Scanner scanner) {
+        String species = "";
+        boolean validSpecies = false;
+
+        while (!validSpecies) {
+            System.out.println("Enter species:");
+            System.out.println("(Capuchin, Guenon, Macaque, Marmoset, Squirrel Monkey, Tamarin)");
+            species = scanner.nextLine().trim();
+
+            // Check if species matches approved list
+            if (species.equalsIgnoreCase("Capuchin") ||
+                    species.equalsIgnoreCase("Guenon") ||
+                    species.equalsIgnoreCase("Macaque") ||
+                    species.equalsIgnoreCase("Marmoset") ||
+                    species.equalsIgnoreCase("Squirrel Monkey") ||
+                    species.equalsIgnoreCase("Tamarin")) {
+                validSpecies = true;
+            } else {
+                System.out.println("Invalid species. Please enter one from the list.");
+            }
+        }
+        return species;
+    }
+
 
     // This method prints the menu options
     public static void displayMenu() {
@@ -101,9 +187,6 @@ public class Driver {
     }
 
 
-    // Complete the intakeNewDog method
-    // The input validation to check that the dog is not already in the list
-    // is done for you
     public static void intakeNewDog(Scanner scanner) {
         System.out.println("What is the dog's name?");
         String name = scanner.nextLine();
@@ -114,34 +197,23 @@ public class Driver {
             }
         }
 
-        // Add the code to instantiate a new dog and add it to the appropriate list
-        System.out.println("What is the dog's breed?");
-        String breed = scanner.nextLine();
+        String breed = getValidString(scanner, "What is the dog's breed?");
 
-        System.out.println("What is the dog's gender? (male/female)");
-        String gender = scanner.nextLine();
+        String gender = getValidString(scanner,"What is the dog's gender? (male/female)");
 
-        System.out.println("What is the dog's age?");
-        String age = scanner.nextLine();
+        String age = getValidString(scanner,"What is the dog's age?");
 
-        System.out.println("What is the dog's weight?");
-        String weight = scanner.nextLine();
+        String weight = getValidString(scanner, "What is the dog's weight?");
 
-        System.out.println("What is the acquisition date? (MM-DD-YYYY)");
-        String acquisitionDate = scanner.nextLine();
+        String acquisitionDate = getValidString(scanner, "What is the acquisition date? (MM-DD-YYYY)");
 
-        System.out.println("What is the acquisition country?");
-        String acquisitionCountry = scanner.nextLine();
+        String acquisitionCountry = getValidString(scanner,"What is the acquisition country?");
 
-        System.out.println("What is the training status?");
-        String trainingStatus = scanner.nextLine();
+        String trainingStatus = getValidString(scanner, "What is the training status?");
 
-        System.out.println("Is this dog reserved? (true/false)");
-        boolean reserved = scanner.nextBoolean();
-        scanner.nextLine(); // Clear the buffer!
+        boolean reserved = getValidBoolean(scanner, "Is this dog reserved? (true/false)");
 
-        System.out.println("What is the in-service country?");
-        String inServiceCountry = scanner.nextLine();
+        String inServiceCountry = getValidString(scanner, "What is the in-service country?");
 
         // --- Instantiate and Add ---
         // Create the Dog object using the parameters from the Dog constructor
@@ -155,13 +227,12 @@ public class Driver {
     }
 
 
-        // Complete intakeNewMonkey
+
 	//Instantiate and add the new monkey to the appropriate list
-        // For the project submission you must also  validate the input
-	// to make sure the monkey doesn't already exist and the species type is allowed
+
         public static void intakeNewMonkey(Scanner scanner) {
-            System.out.println("What is the monkey's name?");
-            String name = scanner.nextLine();
+
+            String name = getValidString(scanner, "What is the monkey's name?");
 
             // Check if the monkey name already exists
             for (Monkey monkey : monkeyList) {
@@ -171,54 +242,31 @@ public class Driver {
                 }
             }
 
-            System.out.println("What is the monkey's species?");
-            String species = scanner.nextLine();
-
             // Species validation
-            if (!(species.equalsIgnoreCase("Capuchin") ||
-                    species.equalsIgnoreCase("Guenon") ||
-                    species.equalsIgnoreCase("Macaque") ||
-                    species.equalsIgnoreCase("Marmoset") ||
-                    species.equalsIgnoreCase("Squirrel monkey") ||
-                    species.equalsIgnoreCase("Tamarin"))) {
-                System.out.println("\n\nError: Species not allowed.\n\n");
+            String species = getValidMonkeySpecies(scanner);
 
-                return;
-            }
+            String gender = getValidString(scanner, "What is the monkey's gender? (male/female)");
 
-            System.out.println("What is the monkey's gender? (male/female)");
-            String gender = scanner.nextLine();
+            String age = getValidNumericString(scanner, "What is the monkey's age?");
 
-            System.out.println("What is the monkey's age?");
-            String age = scanner.nextLine();
+            String weight = getValidNumericString(scanner, "What is the monkey's weight?");
 
-            System.out.println("What is the monkey's weight?");
-            String weight = scanner.nextLine();
+            String acquisitionDate = getValidString(scanner, "What is the acquisition date? (MM-DD-YYYY)");
 
-            System.out.println("What is the acquisition date? (MM-DD-YYYY)");
-            String acquisitionDate = scanner.nextLine();
+            String acquisitionCountry =getValidString(scanner, "What is the acquisition country?");
 
-            System.out.println("What is the acquisition country?");
-            String acquisitionCountry = scanner.nextLine();
+            String trainingStatus = getValidString(scanner, "What is the training status?");
 
-            System.out.println("What is the training status?");
-            String trainingStatus = scanner.nextLine();
+            // Validation for boolean type variable "reserved"
+            boolean reserved = getValidBoolean(scanner,"Is this monkey reserved? (true/false)");
 
-            System.out.println("Is this monkey reserved? (true/false)");
-            boolean reserved = scanner.nextBoolean();
-            scanner.nextLine(); // Clear the newline buffer after nextBoolean()
+            String inServiceCountry = getValidString(scanner, "What is the in-service country?");
 
-            System.out.println("What is the in-service country?");
-            String inServiceCountry = scanner.nextLine();
+            double tailLength = getValidDouble(scanner, "What is the tail length?");
 
-            System.out.println("What is the tail length?");
-            double tailLength = Double.parseDouble(scanner.nextLine());
+            double height = getValidDouble(scanner, "What is the height?");
 
-            System.out.println("What is the height?");
-            double height = Double.parseDouble(scanner.nextLine());
-
-            System.out.println("What is the body length?");
-            double bodyLength = Double.parseDouble(scanner.nextLine());
+            double bodyLength = getValidDouble(scanner, "What is the body length?");
 
             // Instantiate and Add to List
             // Creating the new Monkey object using all gathered variables
@@ -232,8 +280,8 @@ public class Driver {
             System.out.println("\nMonkey " + name + " added successfully!");
 
         }
-        // Complete reserveAnimal
-        // You will need to find the animal by animal type and in service country
+
+
         public static void reserveAnimal(Scanner scanner) {
             System.out.println("What animal type are you looking for?");
             String type = scanner.nextLine();
