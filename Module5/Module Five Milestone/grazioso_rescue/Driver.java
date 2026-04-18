@@ -1,18 +1,21 @@
 package grazioso_rescue;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Driver {
-    private static ArrayList<Dog> dogList = new ArrayList<Dog>();
+
+    private static List<Dog> dogList;
     // Instance variables (if needed)
-    private static ArrayList<Monkey> monkeyList = new ArrayList<Monkey>();
+    private static List<Monkey> monkeyList;
 
     public static void main(String[] args) {
 
-
-        initializeDogList();
-        initializeMonkeyList();
+        dogList = initializeDogList();
+        monkeyList = initializeMonkeyList();
 
         // Add a loop that displays the menu, accepts the users input
         // and takes the appropriate action.
@@ -162,20 +165,25 @@ public class Driver {
 
 
     // Adds dogs to a list for testing
-    public static void initializeDogList() {
-        Dog dog1 = new Dog("Spot", "German Shepherd", "male", "1", "25.6", "05-12-2019", "United States", "intake", false, "United States");
-        Dog dog2 = new Dog("Rex", "Great Dane", "male", "3", "35.2", "02-03-2020", "United States", "Phase I", false, "United States");
-        Dog dog3 = new Dog("Bella", "Chihuahua", "female", "4", "25.6", "12-12-2019", "Canada", "in service", true, "Canada");
+    public static List<Dog> initializeDogList() {
+        dogList = new ArrayList<>();
+
+        Dog dog1 = new Dog("Spot", "German Shepherd", Gender.MALE, 1, 25.6, LocalDate.of(2019, 5, 12), "United States", TrainingStatus.WILD, false, "United States");
+        Dog dog2 = new Dog("Rex", "Great Dane", Gender.MALE, 3, 35.2, LocalDate.of(2019, 5, 12), "United States", TrainingStatus.NEWBY, false, "United States");
+        Dog dog3 = new Dog("Bella", "Chihuahua", Gender.FEMALE, 4, 25.6, LocalDate.of(2019, 5, 12), "Canada", TrainingStatus.TRAINED_L1, true, "Canada");
 
         dogList.add(dog1);
         dogList.add(dog2);
         dogList.add(dog3);
+
+        return dogList;
     }
 
 
     // Adds monkeys to a list for testing
     //Optional for testing
-    public static void initializeMonkeyList() {
+    public static List<Monkey> initializeMonkeyList() {
+        monkeyList = new ArrayList<>();
         Monkey monkey1 = new Monkey("Pit","", "male", "5", "40", "06-23-2020", "Thailand", "untrained", false, "Thailand", 2.4, 4, 4, "Capuchin");
         Monkey monkey2 = new Monkey("Dana","", "female", "3", "30", "05-20-2020", "Laos", "trained: Phase I", true, "Laos", 2.1, 3.8, 3.5, "Guenon");
         Monkey monkey3 = new Monkey("Seth","", "male", "2", "25", "04-19-2020", "Cambodia", "untrained", false, "Cambodia", 1.5, 3.3, 3.3, "Macaque");
@@ -183,6 +191,8 @@ public class Driver {
         monkeyList.add(monkey1);
         monkeyList.add(monkey2);
         monkeyList.add(monkey3);
+
+        return monkeyList;
 
     }
 

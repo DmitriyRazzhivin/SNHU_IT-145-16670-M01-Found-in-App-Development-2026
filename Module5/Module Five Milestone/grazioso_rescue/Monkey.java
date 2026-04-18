@@ -11,32 +11,9 @@ public Monkey(){
     super();
 }
 
-//Detailed Constructor
-public Monkey(String name, String animalType, String gender, String age, String weight,
-              String acquisitionDate, String acquisitionCountry, String trainingStatus,
-              boolean reserved, String inServiceCountry,double tailLength,
-              double height, double bodyLength, String species){
-
-    super(); // Initialize the superclass
-
-    // Initialize inherited attributes using setters
-    setName(name);
-    setGender(gender);
-    setAge(age);
-    setWeight(weight);
-    setAcquisitionDate(acquisitionDate);
-    setAcquisitionLocation(acquisitionCountry);
-    setTrainingStatus(trainingStatus);
-    setReserved(reserved);
-    setInServiceCountry(inServiceCountry);
-    setAnimalType("monkey");
-
-    // Initialize Monkey-specific attributes
-    setTailLength(tailLength);
-    setHeight(height);
-    setBodyLength(bodyLength);
-    setSpecies(species);
-
+    @Override
+    public String getType() {
+        return this.getClass().getName();
     }
 
     public Monkey(String pit, String s) {
