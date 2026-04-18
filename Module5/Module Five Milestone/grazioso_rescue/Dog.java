@@ -8,6 +8,10 @@ public class Dog extends RescueAnimal {
     // Instance variable
     private String breed;
 
+    public Dog() {
+        super();
+    }
+
     public Dog(String name, String breed, Gender gender, int age, double weight, LocalDate acquisitionDate, String acquisitionCountry, TrainingStatus trainingStatus, boolean reserved, String inServiceCountry) {
         super(name, gender, age, weight, acquisitionDate, acquisitionCountry, trainingStatus, reserved, inServiceCountry);
         this.breed = breed;

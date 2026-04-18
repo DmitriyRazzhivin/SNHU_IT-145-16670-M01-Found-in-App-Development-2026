@@ -18,6 +18,9 @@ public abstract class RescueAnimal {
     private boolean reserved = false;
 	private String inServiceCountry;
 
+	public RescueAnimal() {
+	}
+
 	public RescueAnimal(String name, Gender gender, int age, double weight, LocalDate acquisitionDate, String acquisitionCountry, TrainingStatus trainingStatus, boolean reserved, String inServiceCountry) {
 		this.name = name;
 		this.gender = gender;

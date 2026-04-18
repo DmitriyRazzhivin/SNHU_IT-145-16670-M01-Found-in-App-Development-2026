@@ -2,9 +2,7 @@ package grazioso_rescue;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Driver {
 
@@ -12,10 +10,15 @@ public class Driver {
     // Instance variables (if needed)
     private static List<Monkey> monkeyList;
 
+    private static Map<String, List<? extends  RescueAnimal>> allAnimals = new HashMap<>();
+
     public static void main(String[] args) {
 
         dogList = initializeDogList();
+        allAnimals.put("DOGS", dogList);
+
         monkeyList = initializeMonkeyList();
+        allAnimals.put("MONKEYS", monkeyList);
 
         // Add a loop that displays the menu, accepts the users input
         // and takes the appropriate action.
@@ -77,12 +80,31 @@ public class Driver {
             }
         }
 
+    //Helper method to get a valid double from the user
+    public static int getValidInt(Scanner scanner, String prompt){
+        int value = -1;
+        while(true){
+            try {
+                System.out.println(prompt);
+                String input = scanner.nextLine().trim();
+                value = Integer.parseInt(input);
+                if(value >= 0) {
+                    return value;
+                }else {
+                    System.out.println("Value must be a positive number");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a numeric value");
+            }
+        }
+    }
+
     //Helper method to get a valid String from user(not empty)
     public static String getValidString(Scanner scanner, String prompt){
         String input = "";
         while (input.isEmpty()) {
-            System.out.println(prompt);
             input = scanner.nextLine().trim();
+            System.out.println(prompt);
             if(input.isEmpty()){
                 System.out.println("This field cannot be empty. Please try again.");
             }
@@ -198,6 +220,8 @@ public class Driver {
 
 
     public static void intakeNewDog(Scanner scanner) {
+        Dog newDog = new Dog();
+
         System.out.println("What is the dog's name?");
         String name = scanner.nextLine();
         for(Dog dog: dogList) {
@@ -206,29 +230,34 @@ public class Driver {
                 return; //returns to menu
             }
         }
+        newDog.setName(name);
 
         String breed = getValidString(scanner, "What is the dog's breed?");
+        newDog.setBreed(breed);
 
         String gender = getValidString(scanner,"What is the dog's gender? (male/female)");
+        newDog.setGender(gender);
 
-        String age = getValidString(scanner,"What is the dog's age?");
+        int age = getValidInt(scanner,"What is the dog's age?");
+        newDog.setAge(age);
 
         String weight = getValidString(scanner, "What is the dog's weight?");
+        newDog.setWeight(weight);
 
         String acquisitionDate = getValidString(scanner, "What is the acquisition date? (MM-DD-YYYY)");
+        newDog.setAcquisitionDate(acquisitionDate);
 
         String acquisitionCountry = getValidString(scanner,"What is the acquisition country?");
+        newDog.setAcquisitionCountry(acquisitionCountry);
 
         String trainingStatus = getValidString(scanner, "What is the training status?");
+        newDog.setTrainingStatus(trainingStatus);
 
         boolean reserved = getValidBoolean(scanner, "Is this dog reserved? (true/false)");
+        newDog.setReserved(reserved);
 
         String inServiceCountry = getValidString(scanner, "What is the in-service country?");
-
-        // --- Instantiate and Add ---
-        // Create the Dog object using the parameters from the Dog constructor
-        Dog newDog = new Dog(name, breed, gender, age, weight, acquisitionDate,
-                acquisitionCountry, trainingStatus, reserved, inServiceCountry);
+        newDog.setInServiceCountry(inServiceCountry);
 
         // Save to the list
         dogList.add(newDog);
@@ -356,6 +385,8 @@ public class Driver {
         public static void printAnimals(String listType) {
             //System.out.println("The method printAnimals needs to be implemented");
             // Option 4: Print Dogs
+            List<? extends RescueAnimal> animals = listType.equals("dog") ? dogList : monkeyList;
+
             if (listType.equalsIgnoreCase("dog")) {
                 System.out.println("\n--- List of Dogs ---");
                 for (Dog dog : dogList) {
